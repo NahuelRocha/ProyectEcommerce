@@ -20,5 +20,17 @@ public class Mappers {
         );
     }
 
+    public static void mapUser(User oldUser, User updateUser) {
+
+        oldUser.setUsername(updateUser.getUsername());
+        oldUser.setFirstName(updateUser.getFirstName());
+        oldUser.setLastName(updateUser.getLastName());
+        oldUser.setEmail(updateUser.getEmail());
+        oldUser.setPhone(updateUser.getPhone());
+        oldUser.setRole(updateUser.getRole());
+        oldUser.setPurchases(updateUser.getPurchases());
+
+    }
+
 
 }

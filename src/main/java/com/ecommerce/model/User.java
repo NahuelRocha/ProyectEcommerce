@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -52,7 +53,7 @@ public class User {
     private String role;
 
     @OneToMany(mappedBy = "user")
-    private List<Purchase> purchases;
+    private List<Purchase> purchases = new ArrayList<>();
 
 }
 
