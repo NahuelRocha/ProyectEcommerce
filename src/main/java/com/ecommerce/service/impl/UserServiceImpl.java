@@ -26,7 +26,6 @@ public class UserServiceImpl implements UserService {
     public UserDTO createUser(User user) {
 
         User newUser = new User();
-        List<Purchase> purchase = new ArrayList<>();
 
         newUser.setId(user.getId());
         newUser.setUsername(user.getUsername());
@@ -36,7 +35,6 @@ public class UserServiceImpl implements UserService {
         newUser.setPhone(user.getPhone());
         newUser.setRole(user.getRole());
         newUser.setPassword(user.getPassword());
-        newUser.setPurchases(purchase);
 
         userRepository.save(newUser);
 
@@ -50,6 +48,7 @@ public class UserServiceImpl implements UserService {
                 .map(Mappers::userToUserDTO).collect(Collectors.toList());
 
     }
+
     @Override
     public UserDTO getUser(Long id) {
 
@@ -69,6 +68,22 @@ public class UserServiceImpl implements UserService {
 
         return "The user has been successfully deleted";
     }
+
+    @Override
+    public UserDTO updateUser(Long id, User userUpdate) {
+
+        User user =  userRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("User not found with ID: " + id));
+
+        Mappers.mapUser(user , userUpdate);
+
+        userRepository.save(user);
+
+        return Mappers.userToUserDTO(user);
+
+    }
+
+
 
 
 }

@@ -28,5 +28,4 @@ public class GlobalHandleException {
             return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
         }
 
-
 }
