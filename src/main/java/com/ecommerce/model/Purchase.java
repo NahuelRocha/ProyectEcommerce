@@ -23,17 +23,13 @@ public class Purchase {
     private LocalDate date;
 
     @Column(name = "total_price")
-    private double totalPrice;
+    private Double totalPrice;
 
-
-    private int quantity;
-
-    private double price;
+    private Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
-
 
     @Column(name = "user_name")
     private String userName;
