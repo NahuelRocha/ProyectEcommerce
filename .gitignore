@@ -1,8 +1,4 @@
 env.properties
-<<<<<<< HEAD
-=======
-env.properties.sample
->>>>>>> 5eeb9e514cb9589638eff2fae1d7edeb5cc750eb
 
 HELP.md
 target/
