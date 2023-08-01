@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -25,7 +27,9 @@ public class OrderDetails {
 
     private int detailSoldQuantity;
 
-    @ManyToOne
+    private double totalPrice;
+
+    @OneToOne
     @JoinColumn(name = "id_purchase")
     private Purchase purchase;
 

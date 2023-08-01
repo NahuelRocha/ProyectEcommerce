@@ -55,5 +55,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Purchase> purchases = new ArrayList<>();
 
+
 }
 

@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,16 +20,20 @@ public class Purchase {
 
     private LocalDate date;
 
-    private int quantity;
 
-    private double price;
+    @Column(name = "total_price")
+    private double totalPrice;
+
 
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
 
-    @OneToMany(mappedBy = "purchase")
-    private List<OrderDetails> orderDetails;
+    @Column(name = "user_name")
+    private String userName;
 
+
+    @OneToOne(mappedBy = "purchase")
+    private OrderDetails orderDetails = new OrderDetails();
 
 }

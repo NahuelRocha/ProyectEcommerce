@@ -1,6 +1,8 @@
 package com.ecommerce.mapper;
 
+import com.ecommerce.dto.PurchaseDTO;
 import com.ecommerce.dto.UserDTO;
+import com.ecommerce.model.Purchase;
 import com.ecommerce.model.User;
 
 public class Mappers {
@@ -32,5 +34,23 @@ public class Mappers {
 
     }
 
+    public static PurchaseDTO purchaseToPurchaseDTO(Purchase purchase){
+
+        return new PurchaseDTO(
+                purchase.getId(),
+                purchase.getDate(),
+                purchase.getTotalPrice(),
+                purchase.getUserName(),
+                purchase.getOrderDetails()
+        );
+
+    }
+
+    public static Purchase mapPurchase(Purchase purchase) {
+
+        return null;
+
+
+    }
 
 }

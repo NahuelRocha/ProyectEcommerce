@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -83,7 +84,26 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public UserDTO findByUsername(String username) {
 
+        User findUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
+
+        return Mappers.userToUserDTO(findUser);
+    }
+
+    @Override
+    public List<UserDTO> findByFirstName(String firstName) {
+
+        List<User> users = userRepository.findByFirstName(firstName);
+
+        if(users.isEmpty()){
+            throw new ResourceNotFoundException("No user by that name: " + firstName);
+        }
+
+        return users.stream().map(Mappers::userToUserDTO).toList();
+    }
 
 
 }

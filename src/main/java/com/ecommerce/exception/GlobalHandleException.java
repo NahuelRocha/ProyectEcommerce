@@ -28,4 +28,15 @@ public class GlobalHandleException {
             return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
         }
 
+        @ExceptionHandler(ResourceNotFoundException.class)
+        public ResponseEntity<Map<String,String>> handleUserNotFoundException(ResourceNotFoundException ex){
+
+            Map<String,String> resp = new HashMap<>();
+
+            resp.put("ERROR", ex.getMessage());
+
+            return new  ResponseEntity<>(resp , HttpStatus.NOT_FOUND);
+
+        }
+
 }
