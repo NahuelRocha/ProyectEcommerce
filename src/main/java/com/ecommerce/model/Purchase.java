@@ -18,11 +18,8 @@ public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private LocalDate date;
-
     private int quantity;
-
     private double price;
 
     @ManyToOne
@@ -30,7 +27,7 @@ public class Purchase {
     private User user;
 
     @OneToMany(mappedBy = "purchase")
-    private List<OrderDetails> orderDetails;
+    private List<OrderDetail> orderDetails;
 
 
 }
