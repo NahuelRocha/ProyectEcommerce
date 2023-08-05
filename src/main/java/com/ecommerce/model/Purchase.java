@@ -1,11 +1,13 @@
 package com.ecommerce.model;
 
+import com.ecommerce.utils.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,13 +22,19 @@ public class Purchase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate date;
+    @Column(name = "id_order")
+    private String orderId;
 
-    @Column(name = "total_price")
-    private Double totalPrice;
+    private LocalDateTime date;
 
-    private Integer quantity;
+    @Column(name = "order_status")
+    private OrderStatus orderStatus;
 
+    @NotBlank(message = "Enter the address")
+    @Column(name = "shipping_address")
+    private String shippingAddress;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
@@ -35,6 +43,6 @@ public class Purchase {
     private String userName;
 
     @OneToMany(mappedBy = "purchase")
-    private List<OrderDetail> orderDetails = new ArrayList<>();
+    private List<OrderDetail> orderDetail = new ArrayList<>();
 
 }

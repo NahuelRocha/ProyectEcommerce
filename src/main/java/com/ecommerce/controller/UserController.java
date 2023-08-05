@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable("id") Long id, @RequestBody User userUpdate) {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable("id") Long id, @Valid @RequestBody User userUpdate) {
 
         UserDTO user = userService.updateUser(id, userUpdate);
 
@@ -61,8 +61,8 @@ public class UserController {
 
     }
 
-    @GetMapping("username")
-    public ResponseEntity<UserDTO> findByUserName(@RequestParam("username") String username){
+    @GetMapping("/by-username/{username}")
+    public ResponseEntity<UserDTO> findByUserName(@PathVariable("username") String username) {
 
         UserDTO findUser = userService.findByUsername(username);
 
@@ -71,11 +71,11 @@ public class UserController {
     }
 
     @GetMapping("/by-name/{name}")
-    public ResponseEntity<List<UserDTO>> findByFirstName(@PathVariable("name") String firstName){
+    public ResponseEntity<List<UserDTO>> findByFirstName(@PathVariable("name") String firstName) {
 
         List<UserDTO> users = userService.findByFirstName(firstName);
 
-        return new ResponseEntity<>(users , HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
 
     }
 

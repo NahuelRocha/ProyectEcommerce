@@ -13,4 +13,5 @@ public record UserDTO(
         String phone,
         String role,
         List<Purchase> purchase
+
 ) {}

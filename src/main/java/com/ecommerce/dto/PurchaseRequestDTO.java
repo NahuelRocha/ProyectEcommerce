@@ -1,13 +1,14 @@
 package com.ecommerce.dto;
 
-import com.ecommerce.model.OrderDetail;
 
-import java.util.List;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record PurchaseRequestDTO(
+        @NotNull(message = "The user id is missing")
         Long idUser,
-        Double price,
-        Integer quantity,
-        List<OrderDetail> orderDetails
+
+        @NotBlank(message = "Enter the address")
+        String shippingAddress
 ) {}
 

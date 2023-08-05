@@ -3,7 +3,6 @@ package com.ecommerce.service.impl;
 import com.ecommerce.dto.UserDTO;
 import com.ecommerce.exception.ResourceNotFoundException;
 import com.ecommerce.mapper.Mappers;
-import com.ecommerce.model.Purchase;
 import com.ecommerce.model.User;
 import com.ecommerce.repository.UserRepository;
 import com.ecommerce.service.UserService;
@@ -26,19 +25,27 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO createUser(User user) {
 
-        User newUser = new User();
+        Optional<User> existingUsername = userRepository.findByUsername(user.getUsername());
 
-        newUser.setUsername(user.getUsername());
-        newUser.setFirstName(user.getFirstName());
-        newUser.setLastName(user.getLastName());
-        newUser.setEmail(user.getEmail());
-        newUser.setPhone(user.getPhone());
-        newUser.setRole(user.getRole());
-        newUser.setPassword(user.getPassword());
+        if (existingUsername.isEmpty()){
 
-        userRepository.save(newUser);
+            User newUser = new User();
 
-        return Mappers.userToUserDTO(newUser);
+            newUser.setUsername(user.getUsername());
+            newUser.setFirstName(user.getFirstName());
+            newUser.setLastName(user.getLastName());
+            newUser.setEmail(user.getEmail());
+            newUser.setPhone(user.getPhone());
+            newUser.setRole(user.getRole());
+            newUser.setPassword(user.getPassword());
+            newUser.setPurchase(new ArrayList<>());
+
+            userRepository.save(newUser);
+
+            return Mappers.userToUserDTO(newUser);
+
+        } else throw new IllegalArgumentException("The username already exists in the database");
+
     }
 
     @Override

@@ -39,4 +39,26 @@ public class GlobalHandleException {
 
         }
 
+
+        @ExceptionHandler({IllegalArgumentException.class})
+        public ResponseEntity<Map<String,String>> handleProductAlreadyExistsException(IllegalArgumentException ex){
+
+            Map<String,String> resp = new HashMap<>();
+            resp.put("ERROR",ex.getMessage());
+
+            return new ResponseEntity<>(resp , HttpStatus.BAD_REQUEST);
+
+        }
+
+        @ExceptionHandler(InsufficientStockException.class)
+        public ResponseEntity<Map<String,String>> handleStockInsufficientException(InsufficientStockException ex){
+
+            Map<String,String> resp = new HashMap<>();
+
+            resp.put("ERROR" , ex.getMessage());
+
+            return new ResponseEntity<>(resp , HttpStatus.NOT_FOUND);
+
+        }
+
 }

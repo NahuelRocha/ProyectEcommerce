@@ -1,12 +1,13 @@
 package com.ecommerce.mapper;
 
 
-import com.ecommerce.dto.PurchaseDTO;
-import com.ecommerce.dto.UserDTO;
-import com.ecommerce.model.Purchase;
-import com.ecommerce.dto.CategoryDTO;
-import com.ecommerce.model.Category;
-import com.ecommerce.model.User;
+import com.ecommerce.dto.*;
+import com.ecommerce.model.*;
+import com.ecommerce.utils.OrderStatus;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class Mappers {
 
@@ -21,7 +22,7 @@ public class Mappers {
                 user.getEmail(),
                 user.getPhone(),
                 user.getRole(),
-                user.getPurchases()
+                user.getPurchase()
         );
     }
 
@@ -33,7 +34,7 @@ public class Mappers {
         oldUser.setEmail(updateUser.getEmail());
         oldUser.setPhone(updateUser.getPhone());
         oldUser.setRole(updateUser.getRole());
-        oldUser.setPurchases(updateUser.getPurchases());
+        oldUser.setPurchase(updateUser.getPurchase());
 
     }
 
@@ -43,19 +44,28 @@ public class Mappers {
         return new PurchaseDTO(
                 purchase.getId(),
                 purchase.getDate(),
-                purchase.getTotalPrice(),
                 purchase.getUserName(),
-                purchase.getOrderDetails()
+                purchase.getOrderId(),
+                purchase.getOrderStatus(),
+                purchase.getOrderDetail()
         );
 
     }
 
-    public static Purchase mapPurchase(Purchase purchase) {
+        public static Purchase mapPurchase(PurchaseRequestDTO purchaseRequestDTO , User user) {
 
-        return null;
+            Purchase newPurchase = new Purchase();
+            newPurchase.setOrderId(UUID.randomUUID().toString());
+            newPurchase.setDate(LocalDateTime.now());
+            newPurchase.setOrderStatus(OrderStatus.PLACED);
+            newPurchase.setShippingAddress(purchaseRequestDTO.shippingAddress());
+            newPurchase.setUserName(user.getUsername());
+            newPurchase.setUser(user);
+
+            return newPurchase;
 
 
-    }
+        }
 
 
     public static CategoryDTO categoryToCategoryDTO( Category category ) {
@@ -65,5 +75,40 @@ public class Mappers {
                 category.getDescription()
         );
     }
+
+    public static OrderDetailDTO orderDetailToDTO (OrderDetail orderDetail , Product product , String username){
+
+        ProductDTO newProductDTO = new ProductDTO(
+                product.getId(),
+                product.getName(),
+                product.getStock(),
+                product.getDescription(),
+                product.getPrice()
+        );
+
+        return new OrderDetailDTO(
+                orderDetail.getId(),
+                orderDetail.getOrderId(),
+                orderDetail.getDetailPrice(),
+                orderDetail.getDetailQuantity(),
+                orderDetail.getTotalPrice(),
+                newProductDTO,
+                username
+        );
+
+    }
+
+    public static ProductDTO mapProductToDTO(Product product){
+
+        return new ProductDTO(
+                product.getId(),
+                product.getName(),
+                product.getStock(),
+                product.getDescription(),
+                product.getPrice()
+        );
+
+    }
+
 
 }
