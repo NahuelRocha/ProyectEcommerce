@@ -2,6 +2,7 @@ package com.ecommerce.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -58,6 +59,17 @@ public class GlobalHandleException {
             resp.put("ERROR" , ex.getMessage());
 
             return new ResponseEntity<>(resp , HttpStatus.NOT_FOUND);
+
+        }
+
+        @ExceptionHandler(HttpMessageNotReadableException.class)
+        public ResponseEntity<Map<String,String>> handleMessageNotReadableException(HttpMessageNotReadableException ex){
+
+            Map<String,String> resp = new HashMap<>();
+
+            resp.put("ERROR" , ex.getMessage());
+
+            return new ResponseEntity<>(resp , HttpStatus.BAD_REQUEST);
 
         }
 

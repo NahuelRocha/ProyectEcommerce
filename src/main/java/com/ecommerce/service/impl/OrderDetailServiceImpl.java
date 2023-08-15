@@ -2,6 +2,7 @@ package com.ecommerce.service.impl;
 
 import com.ecommerce.dto.OrderDetailDTO;
 import com.ecommerce.dto.OrderDetailRequest;
+import com.ecommerce.dto.UpdateOrderDetailRequest;
 import com.ecommerce.exception.InsufficientStockException;
 import com.ecommerce.exception.ResourceNotFoundException;
 import com.ecommerce.mapper.Mappers;
@@ -58,8 +59,70 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         purchaseRepository.save(findPurchase);
 
 
-        return Mappers.orderDetailToDTO(newOrderDetail, findProduct ,findPurchase.getUserName());
+        return Mappers.orderDetailToDTO(newOrderDetail, findProduct, findPurchase.getUserName());
 
+
+    }
+
+    @Override
+    public String deleteOrderDetail(Long id) {
+
+        OrderDetail findOrder = orderDetailRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with ID: " + id));
+
+        orderDetailRepository.delete(findOrder);
+
+        return "Order detail successfully removed";
+
+    }
+
+    @Override
+    public OrderDetail updateOderDetail(UpdateOrderDetailRequest updateOrder) {
+
+        OrderDetail existingOrder = orderDetailRepository.findById(updateOrder.idOrder())
+                .orElseThrow(() -> new ResourceNotFoundException("Order detail not found with ID: " + updateOrder.idOrder()));
+
+        Long idProduct = existingOrder.getProduct().getId();
+
+        Integer currentAmount = existingOrder.getDetailQuantity();
+
+        Product findProduct = productRepository.findById(idProduct)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + idProduct));
+
+
+        if (updateOrder.quantity() > currentAmount) {
+
+            Integer addQuantity = updateOrder.quantity() - currentAmount;
+
+            if (findProduct.getStock() < addQuantity) {
+
+                throw new InsufficientStockException("Insufficient stock");
+
+            } else {
+                existingOrder.setDetailQuantity(updateOrder.quantity());
+
+                existingOrder.setTotalPrice(findProduct.getPrice() * updateOrder.quantity());
+
+                findProduct.setStock(findProduct.getStock() - addQuantity);
+            }
+
+        } else {
+
+            Integer restQuantity = currentAmount - updateOrder.quantity();
+
+            existingOrder.setDetailQuantity(updateOrder.quantity());
+
+            existingOrder.setTotalPrice(findProduct.getPrice() * updateOrder.quantity());
+
+            findProduct.setStock(findProduct.getStock() + restQuantity);
+
+        }
+
+        orderDetailRepository.save(existingOrder);
+
+        productRepository.save(findProduct);
+
+        return existingOrder;
 
     }
 }

@@ -1,35 +1,41 @@
 package com.ecommerce.model;
 
+import com.ecommerce.utils.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Data
-@Table(name = "user")
+@Builder
+@Table(name = "app_user")
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "The user name can not be empty")
-    @Column(name = "user_name" , nullable = false)
+
+    @Column(name = "user_name", nullable = false)
     private String username;
 
 
-    @NotBlank(message = "The first name can not be empty")
-    @Column(name = "first_name" , nullable = false)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @NotBlank(message = "The last name can not be empty")
-    @Column(name = "last_name" , nullable = false)
+
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Email(message = "The given email format is not valid")
@@ -41,19 +47,52 @@ public class User {
     @Column(nullable = false)
     private String phone;
 
-
     @Size(min = 8, message = "The password must be at least 8 characters")
     @NotBlank(message = "The password can not be empty")
     @Column(nullable = false)
     private String password;
 
-    @NotBlank(message = "The role can not be empty")
     @Column(nullable = false)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(mappedBy = "user")
     private List<Purchase> purchase;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
 
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
 

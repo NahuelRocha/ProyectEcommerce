@@ -28,6 +28,7 @@ public class Purchase {
     private LocalDateTime date;
 
     @Column(name = "order_status")
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
     @NotBlank(message = "Enter the address")

@@ -1,6 +1,7 @@
 package com.ecommerce.dto;
 
 import com.ecommerce.model.Purchase;
+import com.ecommerce.utils.Role;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public record UserDTO(
         String lastName,
         String email,
         String phone,
-        String role,
+        Role role,
         List<Purchase> purchase
 
 ) {}

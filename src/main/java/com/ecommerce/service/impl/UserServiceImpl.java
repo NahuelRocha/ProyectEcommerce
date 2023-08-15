@@ -1,17 +1,20 @@
 package com.ecommerce.service.impl;
 
 import com.ecommerce.dto.UserDTO;
+import com.ecommerce.dto.GetAllUserRequest;
 import com.ecommerce.exception.ResourceNotFoundException;
 import com.ecommerce.mapper.Mappers;
 import com.ecommerce.model.User;
 import com.ecommerce.repository.UserRepository;
 import com.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -21,38 +24,22 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-
     @Override
-    public UserDTO createUser(User user) {
+    public List<UserDTO> getAllUsers(GetAllUserRequest getAllUserRequest) {
 
-        Optional<User> existingUsername = userRepository.findByUsername(user.getUsername());
+        Pageable pageable = PageRequest.of(getAllUserRequest.page(), getAllUserRequest.size(), Sort.by("firstName").ascending());
 
-        if (existingUsername.isEmpty()){
+        Page<User> pageUser = userRepository.findAll(pageable);
 
-            User newUser = new User();
+        List<User> allUsers = pageUser.getContent();
 
-            newUser.setUsername(user.getUsername());
-            newUser.setFirstName(user.getFirstName());
-            newUser.setLastName(user.getLastName());
-            newUser.setEmail(user.getEmail());
-            newUser.setPhone(user.getPhone());
-            newUser.setRole(user.getRole());
-            newUser.setPassword(user.getPassword());
-            newUser.setPurchase(new ArrayList<>());
+        if (allUsers.isEmpty()) {
 
-            userRepository.save(newUser);
+            throw new ResourceNotFoundException("There are no users to show ");
 
-            return Mappers.userToUserDTO(newUser);
+        }
 
-        } else throw new IllegalArgumentException("The username already exists in the database");
-
-    }
-
-    @Override
-    public List<UserDTO> getAllUsers() {
-
-        return userRepository.findAll().stream()
-                .map(Mappers::userToUserDTO).collect(Collectors.toList());
+        return allUsers.stream().map(Mappers::userToUserDTO).collect(Collectors.toList());
 
     }
 
@@ -69,7 +56,7 @@ public class UserServiceImpl implements UserService {
     public String deleteUser(Long id) {
 
         userRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("User not found with ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
 
         userRepository.deleteById(id);
 
@@ -79,10 +66,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO updateUser(Long id, User userUpdate) {
 
-        User user =  userRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("User not found with ID: " + id));
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
 
-        Mappers.mapUser(user , userUpdate);
+        Mappers.mapUser(user, userUpdate);
 
         userRepository.save(user);
 
@@ -104,11 +91,20 @@ public class UserServiceImpl implements UserService {
 
         List<User> users = userRepository.findByFirstName(firstName);
 
-        if(users.isEmpty()){
+        if (users.isEmpty()) {
             throw new ResourceNotFoundException("No user by that name: " + firstName);
         }
 
         return users.stream().map(Mappers::userToUserDTO).toList();
+    }
+
+    @Override
+    public UserDTO findByEmail(String email) {
+
+        User existingEmail = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Email not found"));
+
+        return Mappers.userToUserDTO(existingEmail);
     }
 
 

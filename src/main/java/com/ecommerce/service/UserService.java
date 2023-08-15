@@ -1,16 +1,14 @@
 package com.ecommerce.service;
 
 import com.ecommerce.dto.UserDTO;
+import com.ecommerce.dto.GetAllUserRequest;
 import com.ecommerce.model.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
 
-    UserDTO createUser(User user);
-
-    List<UserDTO> getAllUsers();
+    List<UserDTO> getAllUsers(GetAllUserRequest getAllUserRequest);
 
     UserDTO getUser(Long id);
 
@@ -21,5 +19,7 @@ public interface UserService {
     UserDTO findByUsername (String username);
 
     List<UserDTO> findByFirstName(String firstName);
+
+    UserDTO findByEmail(String email);
 
 }

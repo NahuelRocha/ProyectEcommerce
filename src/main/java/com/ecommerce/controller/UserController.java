@@ -1,5 +1,6 @@
 package com.ecommerce.controller;
 
+import com.ecommerce.dto.GetAllUserRequest;
 import com.ecommerce.dto.UserDTO;
 import com.ecommerce.model.User;
 import com.ecommerce.service.impl.UserServiceImpl;
@@ -18,19 +19,10 @@ public class UserController {
 
     private final UserServiceImpl userService;
 
-    @PostMapping("/create")
-    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody User user) {
-        System.out.println(user);
-
-        UserDTO newUser = userService.createUser(user);
-
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-    }
-
     @GetMapping("/get-all")
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
+    public ResponseEntity<List<UserDTO>> getAllUsers(@Valid @RequestBody GetAllUserRequest getAllUserRequest) {
 
-        List<UserDTO> userList = userService.getAllUsers();
+        List<UserDTO> userList = userService.getAllUsers(getAllUserRequest);
 
         return ResponseEntity.ok(userList);
     }
@@ -77,6 +69,14 @@ public class UserController {
 
         return new ResponseEntity<>(users, HttpStatus.OK);
 
+    }
+
+    @GetMapping("/by-email/{email}")
+    private ResponseEntity<UserDTO> findByEmail(@PathVariable("email") String email){
+
+        UserDTO existingEmail = userService.findByEmail(email);
+
+        return ResponseEntity.ok(existingEmail);
     }
 
 }

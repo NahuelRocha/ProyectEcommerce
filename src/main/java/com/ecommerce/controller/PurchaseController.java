@@ -2,6 +2,7 @@ package com.ecommerce.controller;
 
 import com.ecommerce.dto.PurchaseDTO;
 import com.ecommerce.dto.PurchaseRequestDTO;
+import com.ecommerce.dto.UpdatePurchaseRequest;
 import com.ecommerce.service.PurchaseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,23 @@ public class PurchaseController {
 
         return ResponseEntity.ok(findPurchases);
 
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePurchase(@PathVariable("id") Long id) {
+
+        String deleted = purchaseService.deletePurchase(id);
+
+        return ResponseEntity.ok(deleted);
+
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<String> updatePurchase(@Valid @RequestBody UpdatePurchaseRequest update) {
+
+        String updatePurchase = purchaseService.updatePurchase(update);
+
+        return ResponseEntity.ok(updatePurchase);
     }
 
 

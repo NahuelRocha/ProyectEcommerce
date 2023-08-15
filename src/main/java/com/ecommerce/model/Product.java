@@ -23,6 +23,7 @@ public class Product {
     @NotBlank(message = "The name of the product is missing")
     private String name;
 
+    @NotNull(message = "This field cannot be null")
     @Min(value = 0, message = "Stock cannot be less than zero")
     private Integer stock;
 
@@ -30,6 +31,7 @@ public class Product {
     private String description;
 
     @NotNull(message = "This field cannot be null")
+    @Min(value = 0, message = "Price cannot be less than zero")
     private Double price;
 
     @OneToMany(mappedBy = "product")

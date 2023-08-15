@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -36,7 +35,6 @@ public class OrderDetail {
     @NotNull(message = "The total cannot be zero")
     @Column(name = "total_price")
     private Double totalPrice;
-
 
     @JsonIgnore
     @ManyToOne
