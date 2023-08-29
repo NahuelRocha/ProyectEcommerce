@@ -13,7 +13,7 @@
 
 <p align="center">
    <a href="#endpoints">ENDPOINTS</a> •
-  <a href="#HOW TO RUN">HOW TO RUN</a>
+  <a href="#HowToRun">HOW TO RUN</a>
 </p>
 
 <br>
@@ -88,7 +88,7 @@ When updating an order or canceling it, the stock of the respective product or p
 | PUT      | /api/order-detail/update              | Update an order detail                             |
 | GET      | /api/order-detail/by-purchase/{id}    | Get order details by purchase ID                  |
 
-## HOW TO RUN
+## HowToRun
 
 - Create a database in MySQL Workbench or PgAdmin 4.
 
