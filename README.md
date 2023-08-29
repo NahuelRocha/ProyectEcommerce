@@ -20,7 +20,7 @@
 
 <h3>Flow of the API: </h3>
 <br>
-<H5>UserController:</H5>
+<H5 align="center">UserController:</H5>
 <p>
 We will attempt to register a new user in the database. It will be verified that the chosen username is not currently in use.
 If everything goes well, their password will be hashed, and we will generate a JWT token for subsequent authentication.
