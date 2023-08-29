@@ -2,9 +2,14 @@ package com.ecommerce.service.impl;
 
 import com.ecommerce.dto.UserDTO;
 import com.ecommerce.dto.GetAllUserRequest;
+import com.ecommerce.dto.UserUpdateRequest;
 import com.ecommerce.exception.ResourceNotFoundException;
 import com.ecommerce.mapper.Mappers;
+import com.ecommerce.model.OrderDetail;
+import com.ecommerce.model.Purchase;
 import com.ecommerce.model.User;
+import com.ecommerce.repository.OrderDetailRepository;
+import com.ecommerce.repository.PurchaseRepository;
 import com.ecommerce.repository.UserRepository;
 import com.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +28,8 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PurchaseRepository purchaseRepository;
+    private final OrderDetailRepository orderDetailRepository;
 
     @Override
     public List<UserDTO> getAllUsers(GetAllUserRequest getAllUserRequest) {
@@ -55,8 +62,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public String deleteUser(Long id) {
 
-        userRepository.findById(id)
+        User findUser = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
+
+        List<Purchase> findPurchase = purchaseRepository.findByUserName(findUser.getUsername());
+
+        List<OrderDetail> orderDetails = findPurchase.stream()
+                .flatMap(purchase -> orderDetailRepository.findByPurchase(purchase).stream())
+                .toList();
+
+        orderDetails.stream().map(OrderDetail::getId)
+                .forEach(orderDetailRepository::deleteById);
+
+        findPurchase.stream().map(Purchase::getId)
+                .forEach(purchaseRepository::deleteById);
+
 
         userRepository.deleteById(id);
 
@@ -64,7 +84,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO updateUser(Long id, User userUpdate) {
+    public UserDTO updateUser(Long id, UserUpdateRequest userUpdate) {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));

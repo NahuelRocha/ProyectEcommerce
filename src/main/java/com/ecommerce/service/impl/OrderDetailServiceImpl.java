@@ -16,6 +16,8 @@ import com.ecommerce.service.OrderDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -69,6 +71,10 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
         OrderDetail findOrder = orderDetailRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found with ID: " + id));
+
+        Product product = findOrder.getProduct();
+
+        product.setStock(product.getStock()+ findOrder.getDetailQuantity());
 
         orderDetailRepository.delete(findOrder);
 
@@ -124,5 +130,14 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
         return existingOrder;
 
+    }
+
+    @Override
+    public List<OrderDetail> findByPurchase(Long purchaseId) {
+
+        Purchase findPurchase = purchaseRepository.findById(purchaseId)
+                .orElseThrow(() -> new ResourceNotFoundException("Purchase not found with ID: " + purchaseId));
+
+        return orderDetailRepository.findByPurchase(findPurchase);
     }
 }

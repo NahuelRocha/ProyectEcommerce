@@ -6,7 +6,6 @@ import com.ecommerce.model.*;
 import com.ecommerce.utils.OrderStatus;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class Mappers {
@@ -26,15 +25,12 @@ public class Mappers {
         );
     }
 
-    public static void mapUser(User oldUser, User updateUser) {
+    public static void mapUser(User oldUser, UserUpdateRequest updateUser) {
 
-        oldUser.setUsername(updateUser.getUsername());
-        oldUser.setFirstName(updateUser.getFirstName());
-        oldUser.setLastName(updateUser.getLastName());
-        oldUser.setEmail(updateUser.getEmail());
-        oldUser.setPhone(updateUser.getPhone());
-        oldUser.setRole(updateUser.getRole());
-        oldUser.setPurchase(updateUser.getPurchase());
+        oldUser.setFirstName(updateUser.firstName());
+        oldUser.setLastName(updateUser.lastName());
+        oldUser.setEmail(updateUser.email());
+        oldUser.setPhone(updateUser.phone());
 
     }
 
