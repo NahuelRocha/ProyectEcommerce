@@ -88,7 +88,7 @@ When updating an order or canceling it, the stock of the respective product or p
 | PUT      | /api/order-detail/update              | Update an order detail                             |
 | GET      | /api/order-detail/by-purchase/{id}    | Get order details by purchase ID                  |
 
-## RUNIT
+## HOW TO RUN!
 
 - Create a database in MySQL Workbench or PgAdmin 4.
 
