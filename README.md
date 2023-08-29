@@ -50,7 +50,7 @@ When updating an order or canceling it, the stock of the respective product or p
 
 ## ENDPOINTS
 
-
+<div width="100%">
 | Method   | Route                                 | Description                                        |
 | -------- | ------------------------------------- | ------------------------------------------------   |
 
@@ -83,7 +83,10 @@ When updating an order or canceling it, the stock of the respective product or p
 | POST     | /api/order-detail/create              | Create a new OrderDetail                           |
 | DEL      | /api/order-detail/{id}                | Delete a Order by ID                               |
 | PUT      | /api/order-detail/update              | Update a Order                                     |
-| GET      | /api/order-detail/by-purchase/{id}    | Get a Order by Purchase ID                         |
+| GET      | /api/order-detail/by-purchase/{id}    | Get a Order by Purchase ID                         |  
+</div>
+
+
 
 
 
