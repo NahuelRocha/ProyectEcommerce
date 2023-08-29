@@ -29,7 +29,7 @@ public class PurchaseController {
 
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<PurchaseDTO> getPurchaseById(@Valid @PathVariable("id") Long id) {
 
         PurchaseDTO purchase = purchaseService.getPurchaseById(id);
@@ -38,7 +38,7 @@ public class PurchaseController {
 
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/user/{username}")
     public ResponseEntity<List<PurchaseDTO>> findByUserName(@PathVariable("username") String username) {
 
         List<PurchaseDTO> findPurchases = purchaseService.findByUserName(username);

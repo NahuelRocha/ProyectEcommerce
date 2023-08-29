@@ -2,6 +2,7 @@ package com.ecommerce.service;
 
 import com.ecommerce.dto.UserDTO;
 import com.ecommerce.dto.GetAllUserRequest;
+import com.ecommerce.dto.UserUpdateRequest;
 import com.ecommerce.model.User;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface UserService {
 
     String deleteUser(Long id);
 
-    UserDTO updateUser(Long id ,User user);
+    UserDTO updateUser(Long id , UserUpdateRequest user);
 
     UserDTO findByUsername (String username);
 

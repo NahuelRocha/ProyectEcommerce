@@ -4,12 +4,15 @@ import com.ecommerce.dto.OrderDetailDTO;
 import com.ecommerce.dto.OrderDetailRequest;
 import com.ecommerce.dto.UpdateOrderDetailRequest;
 import com.ecommerce.model.OrderDetail;
+import com.ecommerce.model.Purchase;
 import com.ecommerce.service.OrderDetailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/order-detail")
@@ -28,7 +31,7 @@ public class OrderDetailController {
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<String> deleteOrderDetail(@PathVariable("id") Long id){
+    private ResponseEntity<String> deleteOrderDetail(@PathVariable("id") Long id) {
 
         String deleteOrder = orderDetailService.deleteOrderDetail(id);
 
@@ -37,11 +40,18 @@ public class OrderDetailController {
     }
 
     @PutMapping("/update")
-    private ResponseEntity<OrderDetail> updateOrderDetail(@Valid @RequestBody UpdateOrderDetailRequest update){
+    private ResponseEntity<OrderDetail> updateOrderDetail(@Valid @RequestBody UpdateOrderDetailRequest update) {
 
         OrderDetail updateOrder = orderDetailService.updateOderDetail(update);
 
         return ResponseEntity.ok(updateOrder);
+
+    }
+
+    @GetMapping("/by-purchase/{id}")
+    private ResponseEntity<List<OrderDetail>> findByPurchase(@PathVariable("id") Long purchaseId) {
+
+        return ResponseEntity.ok(orderDetailService.findByPurchase(purchaseId));
 
     }
 
