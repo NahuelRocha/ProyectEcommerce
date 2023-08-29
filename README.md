@@ -31,16 +31,16 @@ With this preparation, access to the business logic becomes available. It is pos
 By specifying a page number and size, a specific number of users can be retrieved from the database. Users can be retrieved based on their ID, email, first name, and username.
 Additionally, user data can be updated or deleted. These methods are only accessible to users with an ADMIN role.
 </p>
-<H5>PurchaseController:</H5>
+<H5 align="center">PurchaseController:</H5>
 <p>
 PurchaseController:
 We can create purchases that will be associated with the user making them (this method can be accessed by users with the roles of USER and ADMIN).
 Additionally, we will have the capability to retrieve a purchase using its ID or the associated username.
 Furthermore, methods for updating and deleting purchases will be available, but these actions will only be accessible to users with the ADMIN role.
 </p>
-<H5>PurchaseController:</H5>
+<H5 align="center">PurchaseController:</H5>
 <p>
-OrderDetailController:
+<H5 align="center">OrderDetailController:</H5>
 We will have the ability to create, delete/cancel, and update our orders. Additionally, we can search for an order based on the associated purchase.
 When updating an order or canceling it, the stock of the respective product or products will also be updated.
 </p>
