@@ -45,6 +45,11 @@ Furthermore, methods for updating and deleting purchases will be available, but 
 We will have the ability to create, delete/cancel, and update our orders. Additionally, we can search for an order based on the associated purchase.
 When updating an order or canceling it, the stock of the respective product or products will also be updated.
 </p>
+<H5 align="center">ProductController:</H5>
+<p>
+We will be able to create , obtain , update and delete products. Also bring a complete list of all current products.
+These endpoints are only accessible by administrators
+</p>
 <br>
 
 ## ENDPOINTS
@@ -87,6 +92,16 @@ When updating an order or canceling it, the stock of the respective product or p
 | DELETE   | /api/order-detail/{id}                | Delete an order detail by ID                       |
 | PUT      | /api/order-detail/update              | Update an order detail                             |
 | GET      | /api/order-detail/by-purchase/{id}    | Get order details by purchase ID                  |
+
+### ProductController
+
+| Method   | Route                                 | Description                                        |
+| -------- | ------------------------------------- | -------------------------------------------------- |
+| POST     | /api/product/create                   | Create a new Product                               |
+| GET      | /api/product/{id}                     | Get a Product by ID                                |
+| PUT      | /api/product/{id}                     | Update a Product by ID                             |
+| DEL      | /api/product/{id}                     | Delete a Product by ID                             |
+| GET      | /api/product/all-products             | Get all Products                                   |
 
 ## HowToRun
 
