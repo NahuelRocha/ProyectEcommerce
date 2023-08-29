@@ -13,7 +13,7 @@
 
 <p align="center">
    <a href="#endpoints">ENDPOINTS</a> •
-  <a href="#runit">RUN IT</a>
+  <a href="#HOW TO RUN!">HOW TO RUN</a>
 </p>
 
 <br>
