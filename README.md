@@ -20,13 +20,16 @@
 
 <h3 align="center">Flow of the API: </h3>
 <br>
-<H5 align="center">UserController:</H5>
+<H5 align="center">AuthController:</H5>
 <p>
 We will attempt to register a new user in the database. It will be verified that the chosen username is not currently in use.
 If everything goes well, their password will be hashed, and we will generate a JWT token for subsequent authentication.
 Once authenticated, the user's registration will be stored in the database. Upon authentication, a new token will be issued, granting access to the business logic for 24 hours.
 This token will be automatically associated with the user. By default, all new users are assigned the common user role, which provides access to the corresponding endpoints.
 There is a method available to grant administrator privileges to common users, enabling access to protected endpoints.
+</p> 
+<H5 align="center">UserController:</H5>
+<p>
 With this preparation, access to the business logic becomes available. It is possible to retrieve all users from the database and implement paging.
 By specifying a page number and size, a specific number of users can be retrieved from the database. Users can be retrieved based on their ID, email, first name, and username.
 Additionally, user data can be updated or deleted. These methods are only accessible to users with an ADMIN role.
