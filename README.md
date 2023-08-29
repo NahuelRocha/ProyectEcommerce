@@ -18,7 +18,7 @@
 
 <br>
 
-<h3>Flow of the API: </h3>
+<h3 align="center">Flow of the API: </h3>
 <br>
 <H5 align="center">UserController:</H5>
 <p>
@@ -33,14 +33,12 @@ Additionally, user data can be updated or deleted. These methods are only access
 </p>
 <H5 align="center">PurchaseController:</H5>
 <p>
-PurchaseController:
 We can create purchases that will be associated with the user making them (this method can be accessed by users with the roles of USER and ADMIN).
 Additionally, we will have the capability to retrieve a purchase using its ID or the associated username.
 Furthermore, methods for updating and deleting purchases will be available, but these actions will only be accessible to users with the ADMIN role.
 </p>
-<H5 align="center">PurchaseController:</H5>
-<p>
 <H5 align="center">OrderDetailController:</H5>
+<p>
 We will have the ability to create, delete/cancel, and update our orders. Additionally, we can search for an order based on the associated purchase.
 When updating an order or canceling it, the stock of the respective product or products will also be updated.
 </p>
