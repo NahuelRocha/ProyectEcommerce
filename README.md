@@ -45,57 +45,53 @@ Furthermore, methods for updating and deleting purchases will be available, but 
 We will have the ability to create, delete/cancel, and update our orders. Additionally, we can search for an order based on the associated purchase.
 When updating an order or canceling it, the stock of the respective product or products will also be updated.
 </p>
-
 <br>
 
 ## ENDPOINTS
 
-<div width="100%">
+### AuthController
+
 | Method   | Route                                 | Description                                        |
-| -------- | ------------------------------------- | ------------------------------------------------   |
+| -------- | ------------------------------------- | -------------------------------------------------- |
+| POST     | /api/auth/register                    | Register a new user and receive a JWT token       |
+| POST     | /api/auth/authenticate                | Use the generated token to authenticate the user   |
+| PUT      | /api/auth/promote-to-admin/{username} | Promote a user to an admin role                    |
 
---------------------------------------  AuthController  -------------------------------------------------
+### UserController
 
-| POST     | /api/auth/register                    | Register a new user and return a JWT token         |
-| POST     | /api/auth/authenticate                | Take the generated token and authenticate the user |
-| PUT      | /api/auth/promote-to-admin/{username} | Promote to admin role                              |
+| Method   | Route                                 | Description                                        |
+| -------- | ------------------------------------- | -------------------------------------------------- |
+| GET      | /api/user/get-all?page=0&size=4       | Retrieve all users, with optional pagination       |
+| GET      | /api/user/{id}                        | Get a user by ID                                   |
+| DELETE   | /api/user/{id}                        | Delete a user by ID                                |
+| PUT      | /api/user/{id}                        | Update a user by ID                                |
+| GET      | /api/user/by-username/{username}      | Get a user by username                             |
+| GET      | /api/user/by-name/{name}              | Get a user by name                                 |
+| GET      | /api/user/by-email/{email}            | Get a user by email                                |
 
----------------------------------------  UserController  ------------------------------------------------
+### PurchaseController
 
-| GET      | /api/user/get-all?page=0&size=4       | You get all users, you can set pagination          |
-| GET      | /api/user/{id}                        | Get a User by ID                                   |
-| DELETE   | /api/user/{id}                        | Delete a User by ID                                |
-| PUT      | /api/user/{id}                        | Update a User by ID                                |
-| GET      | /api/user/by-username/{username}      | Get a User by Username                             |
-| GET      | /api/user/by-name/{name}              | Get a User by Name                                 |
-| GET      | /api/user/by-email/{email}            | Get a User by Email                                |
+| Method   | Route                                 | Description                                        |
+| -------- | ------------------------------------- | -------------------------------------------------- |
+| POST     | /api/purchase/create                  | Create a new purchase                              |
+| GET      | /api/purchase/{id}                    | Get a purchase by ID                               |
+| GET      | /api/purchase/user/{username}         | Get purchases by username                          |
+| DELETE   | /api/purchase/{id}                    | Delete a purchase by ID                            |
+| PUT      | /api/purchase/{id}                    | Update a purchase by ID                            |
 
---------------------------------------  PurchaseController  ---------------------------------------------
+### OrderDetailsController
 
-| POST     | /api/purchase/create                  | Create a new Purchase                              |
-| GET      | /api/purchase/{id}                    | Get a Purchase by ID                               |
-| GET      | /api/purchase/user/{username}         | Get a Purchase by Username                         |
-| DELETE   | /api/purchase/{id}                    | Delete a Purchase by ID                            |
-| PUT      | /api/purchase/{id}                    | Update a Purchase by ID                            |
-
---------------------------------------  OrderDetailsController  ---------------------------------------------
-
-| POST     | /api/order-detail/create              | Create a new OrderDetail                           |
-| DEL      | /api/order-detail/{id}                | Delete a Order by ID                               |
-| PUT      | /api/order-detail/update              | Update a Order                                     |
-| GET      | /api/order-detail/by-purchase/{id}    | Get a Order by Purchase ID                         |  
-</div>
-
-
-
-
+| Method   | Route                                 | Description                                        |
+| -------- | ------------------------------------- | -------------------------------------------------- |
+| POST     | /api/order-detail/create              | Create a new order detail                          |
+| DELETE   | /api/order-detail/{id}                | Delete an order detail by ID                       |
+| PUT      | /api/order-detail/update              | Update an order detail                             |
+| GET      | /api/order-detail/by-purchase/{id}    | Get order details by purchase ID                  |
 
 ## RUNIT
 
-- create a database in MySQL Workbench or PgAdmin 4.
+- Create a database in MySQL Workbench or PgAdmin 4.
 
+- Configure the `application.properties` file with the correct information for your database.
 
-- set the  `application.properties` file correctly with the data of your DB
-
-
-- run Springboot
+- Run Spring Boot.
